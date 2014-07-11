@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <string name="app_name">Screen Recorder</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_section1">Videos</string>
+    <string name="title_section2">Options</string>
+    <string name="hello_world">Hello world!</string>
+    <string name="tab1_button">Button in First Tab</string>
+    <string name="tab2_text">HomePage : https://whdghks913.tistory.com</string>
+    <string name="video_list">Video List</string>
+    <string name="recording">Recording</string>
+    <string name="stop">Stop</string>
+    <string name="video_resolution">Video Resolution</string>
+    <string name="auto_fit">Auto fit into my device</string>
+    <string name="option_hd">HD(1280 x 720)</string>
+    <string name="option_wvga">WVGA(720 x 480)</string>
+    <string name="option_qvga">QVGA(240 x 160)</string>
+    <string name="bit_rate">Bit rate</string>
+    <string name="time_limit">Time limit</string>
+    <string name="set_default">Set to default</string>
+
+</resources>
