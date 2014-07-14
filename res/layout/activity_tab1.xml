@@ -27,7 +27,7 @@
                 android:textSize="20sp" />
 <!-- [BEGIN] Video List -->
             <ScrollView
-                android:id="@+id/scrollView1"
+                android:id="@+id/video_scrollview"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:background="#ffff00" >
@@ -36,6 +36,17 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical" >
+                     <!-- TODO : List view's height needs to be automatical -->
+                    <ListView
+	                    android:id="@+id/video_listview"
+	                    android:layout_width="match_parent"
+	                    android:layout_height="400dp"
+	                    android:cacheColorHint="#00000000"
+	                    android:choiceMode="none"
+	                    android:clickable="false"
+	                    android:focusable="false"
+	                    android:focusableInTouchMode="false"
+	                    android:longClickable="false" />
                 </LinearLayout>
             </ScrollView>
 <!-- [END] Video List -->

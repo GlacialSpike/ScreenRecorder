@@ -1,5 +1,9 @@
 package com.lge.d3.screenrecorder;
 
+import java.io.File;
+import java.io.FilenameFilter;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 
 import android.annotation.SuppressLint;
@@ -7,12 +11,16 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.View.OnTouchListener;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.ListView;
+import android.widget.ScrollView;
 
 @SuppressLint("ValidFragment")
 public class VideoFragment extends Fragment {
@@ -20,6 +28,9 @@ public class VideoFragment extends Fragment {
 		private Button mBtnRec;
 		private Button mBtnStop;
 		private List<String> mVideos;
+		private ListView mVideoListView;
+		private ScrollView mVideoScrollView;
+		private boolean mIsVideoInDir;
 		
 		public VideoFragment() {
 		}
@@ -36,6 +47,9 @@ public class VideoFragment extends Fragment {
 			
 			mBtnRec = (Button) view.findViewById(R.id.btn1);
 			mBtnStop = (Button) view.findViewById(R.id.btn2);
+			mVideoListView = (ListView) view.findViewById(R.id.video_listview);
+			mVideoScrollView = (ScrollView) view.findViewById(R.id.video_scrollview);
+			mVideos = new ArrayList<String>();
 			
 			mBtnRec.setOnClickListener(new OnClickListener() {
 				@Override
@@ -57,7 +71,20 @@ public class VideoFragment extends Fragment {
 				}
 			});
 			
+			mVideoListView.setOnTouchListener(new OnTouchListener() {
+				public boolean onTouch(View v, MotionEvent event) {
+					mVideoListView.requestDisallowInterceptTouchEvent(true);
+					return false;
+				}
+
+			});
+			
 	    	return view;
+		}
+		@Override
+		public void onResume() {
+			super.onResume();
+			scanVideo();
 		}
 		
 		void startRecordService() {
@@ -75,7 +102,32 @@ public class VideoFragment extends Fragment {
 		}
 
 		void scanVideo() {
+			mVideos.clear();
+			mIsVideoInDir = false;
+			File file = new File(Configs.VIDEO_FILES_DIR);
+			if (!file.exists()) {
+				file.mkdirs();
+			}
 			
-		}
+			File[] files = file.listFiles(new FilenameFilter() {
+				@Override
+				public boolean accept(File dir, String filename) {
+					return filename.toLowerCase().endsWith(".mp4");
+				}
+			});
 
+			for (File f : files) {
+				mVideos.add(Configs.VIDEO_FILES_DIR + f.getName());
+			}
+			
+			if (mVideos.size() == 0) {
+				mVideos.add("No video found");
+			} else {
+				mIsVideoInDir = true;
+			}
+			
+			Collections.sort(mVideos);
+			ArrayAdapter<String> fileListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mVideos);
+			mVideoListView.setAdapter(fileListAdapter);
+		}
 }
