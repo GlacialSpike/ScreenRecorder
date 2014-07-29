@@ -110,23 +110,23 @@ public class VideoFragment extends Fragment {
 			}
 			
 			File[] files = file.listFiles(new FilenameFilter() {
+				@SuppressLint("DefaultLocale")
 				@Override
 				public boolean accept(File dir, String filename) {
 					return filename.toLowerCase().endsWith(".mp4");
 				}
 			});
 
-			for (File f : files) {
-				mVideos.add(Configs.VIDEO_FILES_DIR + f.getName());
-			}
-			
-			if (mVideos.size() == 0) {
-				mVideos.add("No video found");
-			} else {
+			if (files != null) {
 				mIsVideoInDir = true;
+				for (File f : files) {
+					mVideos.add(Configs.VIDEO_FILES_DIR + f.getName());
+				}
+				Collections.sort(mVideos);
+			} else {
+				mVideos.add("No video found");
 			}
 			
-			Collections.sort(mVideos);
 			ArrayAdapter<String> fileListAdapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_list_item_1, mVideos);
 			mVideoListView.setAdapter(fileListAdapter);
 		}
